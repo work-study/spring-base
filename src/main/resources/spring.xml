@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+        <bean id="helloworld" class="com.java.code.study.helloworld.HelloWorld">
+            <property name="name" value="zzzz"/>
+        </bean>
+
+        <bean id="car" class="com.java.code.study.bean.Car">
+            <constructor-arg value="aaaaaaa" index="0" type="java.lang.String"/>
+            <constructor-arg type="java.lang.String">
+                <value><![CDATA[<上海>]]></value>
+            </constructor-arg>
+            <constructor-arg type="int">
+                <value>2000</value>
+            </constructor-arg>
+        </bean>
+
+    <bean id="car1" class="com.java.code.study.bean.Car">
+        <constructor-arg value="zouwei01" index="0" type="java.lang.String"/>
+        <constructor-arg value="zw01" type="java.lang.String"/>
+        <constructor-arg value="1000"/>
+    </bean>
+
+        <bean id="person" class="com.java.code.study.bean.Person">
+            <property name="name" value="zw"/>
+            <property name="age" value="100"/>
+           <!-- <property name="car" ref="car"/>-->
+            <property name="car">
+                <bean class="com.java.code.study.bean.Car">
+                    <property name="name" value="inner"/>
+                    <property name="brand" value="brand"/>
+                    <property name="price" value="1000"/>
+                </bean>
+            </property>
+            <property name="car.price" value="120"/>
+        </bean>
+
+        <bean id="moneyPerson" class="com.java.code.study.bean.MoneyPerson">
+            <property name="name" value="list"/>
+            <property name="age" value="20"/>
+            <property name="car">
+                <list>
+                    <ref bean="car"/>
+                    <ref bean="car1"/>
+                </list>
+            </property>
+        </bean>
+</beans>
