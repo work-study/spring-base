@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+    <bean id="car1" class="com.java.code.study.bean.Car">
+        <constructor-arg value="zouwei01" index="0" type="java.lang.String"/>
+        <constructor-arg value="zw01" type="java.lang.String"/>
+        <constructor-arg value="1000"/>
+    </bean>
+
+    <bean id="person" class="com.java.code.study.bean.Person" p:name="zouwei" p:age="18" autowire="byType"/>
+
+    <bean id="addressAbstract" class="com.java.code.study.bean.Address" p:city="hangzhou" p:street="wangshanglu"
+          abstract="true"/>
+
+    <bean id="address" class="com.java.code.study.bean.Address" p:city="hangzhou" p:street="wangshanglu"/>
+
+    <bean id="address1" class="com.java.code.study.bean.Address" p:city="beijing" parent="address"/>
+
+    <bean id="person1" class="com.java.code.study.bean.Person" p:name="zouwei" p:age="18" depends-on="car1"/>
+    <bean id="person2" class="com.java.code.study.bean.Person"
+          p:name="zouwei" p:age="18" depends-on="car1" scope="singleton"/>
+    <bean id="person3" class="com.java.code.study.bean.Person"
+          p:name="zouwei" p:age="18" depends-on="car1" scope="prototype"/>
+
+    <bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/duobao"/>
+    </bean>
+
+    <!--导入属性文件-->
+    <context:property-placeholder location="jdbc.properties"/>
+    <!--使用${}进行获取值-->
+    <bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
+        <property name="driverClass" value="${spring.datasource.driver-class-name}"/>
+        <property name="jdbcUrl" value="${spring.datasource.url}"/>
+    </bean>
+</beans>
