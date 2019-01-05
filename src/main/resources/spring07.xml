@@ -28,6 +28,16 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!--开启事务注解-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--配置事务属性-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+            <tx:method name="adUser" propagation="REQUIRES_NEW" isolation="READ_COMMITTED" read-only="false"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--事务切入点，把事务切入点和事务管理器结合起来-->
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* com.java.code.study.spring06.UserServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
 </beans>
